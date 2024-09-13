@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>大会の編集</h2>
+    <form action="{{ url_for('tournament_update', id=tournament.id) }}" method="POST">
+        <label for="id">#</label>
+        <input name="id" value="{{ tournament.id }}" readonly></input>
+
+        <label for="name">名前</label>
+        <input name="name" value="{{ tournament.name }}"></input>
+
+        <button type="submit" class="btn btn-primary">保存</button>
+    </form>
+</div>
+{% endblock %}

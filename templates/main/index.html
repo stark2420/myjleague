@@ -1,0 +1,95 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="d-grid gap-2 col-6 mx-auto">
+  <a class="btn btn-outline-primary" href="/add">対局結果の追加はこちら</a>
+</div>
+<div class="container mt-4">
+    <h2>対局成績</h2>
+    <form action="/" method="POST">
+      <label for="T">大会名</label>
+      <select id="T" name="T" onchange="this.form.submit()">
+          {% for name in tournament_names %}
+          <option value="{{ name }}" {% if name == default_name %} selected {% endif %} >{{ name }}</option>
+          {% endfor %}
+      </select>
+    </form>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+              <th scope="col">合計ポイント順位</th>
+              <th scope="col">名前</th>
+              <th scope="col">試合数</th>
+              <th scope="col">ポイント</th>
+              <th scope="col">平着</th>
+              <th scope="col">1着</th>
+              <th scope="col">2着</th>
+              <th scope="col">3着</th>
+              <th scope="col">4着</th>
+              <th scope="col">トップ率</th>
+              <th scope="col">ラス回避率</th>
+              <th scope="col">ベストスコア</th>
+              <th scope="col">平均ポイント</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for result in results %}
+            <tr>
+              <th scope="row">{{ loop.index }}</th>
+              <td>{{ result[0] }}</td>
+              <td>{{ result[1] }}</td>
+              <td>{{ result[2] }}</td>
+              <td>{{ result[3] }}</td>
+              <td>{{ result[4] }}</td>
+              <td>{{ result[5] }}</td>
+              <td>{{ result[6] }}</td>
+              <td>{{ result[7] }}</td>
+              <td>{{ result[8] }}</td>
+              <td>{{ result[9] }}</td>
+              <td>{{ result[10] }}</td>
+              <td>{{ result[11] }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+    </table>
+
+    <table class="table table-striped">
+      <thead>
+          <tr>
+            <th scope="col">平均ポイント順位</th>
+            <th scope="col">名前</th>
+            <th scope="col">試合数</th>
+            <th scope="col">ポイント</th>
+            <th scope="col">平着</th>
+            <th scope="col">1着</th>
+            <th scope="col">2着</th>
+            <th scope="col">3着</th>
+            <th scope="col">4着</th>
+            <th scope="col">トップ率</th>
+            <th scope="col">ラス回避率</th>
+            <th scope="col">ベストスコア</th>
+            <th scope="col">平均ポイント</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for result in results2 %}
+          <tr>
+            <th scope="row">{{ loop.index }}</th>
+            <td>{{ result[0] }}</td>
+            <td>{{ result[1] }}</td>
+            <td>{{ result[2] }}</td>
+            <td>{{ result[3] }}</td>
+            <td>{{ result[4] }}</td>
+            <td>{{ result[5] }}</td>
+            <td>{{ result[6] }}</td>
+            <td>{{ result[7] }}</td>
+            <td>{{ result[8] }}</td>
+            <td>{{ result[9] }}</td>
+            <td>{{ result[10] }}</td>
+            <td>{{ result[11] }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+  </table>
+</div>
+{% endblock %}

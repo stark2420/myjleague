@@ -1,0 +1,45 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>対局一覧</h2>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">時間</th>
+              <th scope="col">1着</th>
+              <th scope="col">2着</th>
+              <th scope="col">3着</th>
+              <th scope="col">4着</th>
+              <th scope="col">大会名</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for game, result in games %}
+            <tr>
+              <th scope="row">
+                <a class="text-decoration-none" href="{{ url_for('game_result', id=game.id) }}">
+                    {{ game.id }}
+                </a></th>
+              <td>
+                <a class="text-decoration-none" href="{{ url_for('game_result', id=game.id) }}">
+                    {{ game.time }}
+                </a>
+              </td>
+              <td>{{ result[0] }}</td>
+              <td>{{ result[1] }}</td>
+              <td>{{ result[2] }}</td>
+              <td>{{ result[3] }}</td>
+              <td>{{ game.tournament }}</td>
+              <td>
+                <form action="{{ url_for('game_edit', id=game.id) }}" method="GET">  
+                  <input type="submit" value="編集">  
+                </form>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+    </table>
+</div>
+{% endblock %}

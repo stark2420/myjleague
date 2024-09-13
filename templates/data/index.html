@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>対局結果一覧</h2>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">名前</th>
+              <th scope="col">家</th>
+              <th scope="col">順位</th>
+              <th scope="col">持ち点</th>
+              <th scope="col">ポイント</th>
+              <th scope="col">対局ID</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for result in results %}
+            <tr>
+              <th scope="row">{{ result.id }}</th>
+              <td>{{ result.name }}</td>
+              <td>{{ result.house }}</td>
+              <td>{{ result.rank }}</td>
+              <td>{{ result.score }}</td>
+              <td>{{ result.total_points }}</td>
+              <td>{{ result.game_id }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+    </table>
+</div>
+{% endblock %}

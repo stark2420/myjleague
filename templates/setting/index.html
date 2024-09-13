@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>全データの削除</h2>
+    <h1>元に戻せません．(現在使用不可)</h1>
+    <form action="{{ url_for('setting') }}" method="POST">
+        <input class="btn btn-danger btn-sm" name="submit_button1" type="submit" value="削除" disabled>
+    </form>
+
+    <h2>データベースのダウンロード</h2>
+    <form action="{{ url_for('setting') }}" method="POST">
+        <input name="submit_button2" type="submit" value="ダウンロード">
+    </form>
+</div>
+{% endblock %}

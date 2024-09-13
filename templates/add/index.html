@@ -1,0 +1,143 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>対局結果の追加</h2>
+    <form action="/add" method="POST" id="scoreForm">
+        <div class="input-group mb-3">
+            <label class="input-group-text">大会名</label>
+            <select class="form-select" id="T" name="T">
+                {% for name in tournament_names %}
+                    <option value="{{ name }}" {% if name == tournament_names[-1] %}selected{% endif %} >{{ name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+          
+        <div class="input-group mb-3">
+            <label class="input-group-text">東家</label>
+            <select class="form-select" name="Tname" id="Tname">
+                <option selected>名前</option>
+                {% for name in player_names %}
+                    <option value="{{ name }}">{{ name }}</option>
+                {% endfor %}
+            </select>
+            <input type="number" class="form-control" placeholder="点数" name="Tscore" id="Tscore">
+            <span class="input-group-text">00</span>
+        </div>
+    
+        <div class="input-group mb-3">
+            <label class="input-group-text">南家</label>
+            <select class="form-select" name="Nname" id="Nname">
+                <option selected>名前</option>
+                {% for name in player_names %}
+                    <option value="{{ name }}">{{ name }}</option>
+                {% endfor %}
+            </select>
+            <input type="number" class="form-control" placeholder="点数" name="Nscore" id="Nscore">
+            <span class="input-group-text">00</span>
+        </div>
+    
+        <div class="input-group mb-3">
+            <label class="input-group-text">西家</label>
+            <select class="form-select" name="Sname" id="Sname">
+                <option selected>名前</option>
+                {% for name in player_names %}
+                    <option value="{{ name }}">{{ name }}</option>
+                {% endfor %}
+            </select>
+            <input type="number" class="form-control" placeholder="点数" name="Sscore" id="Sscore">
+            <span class="input-group-text">00</span>
+        </div>
+    
+        <div class="input-group mb-3">
+            <label class="input-group-text">北家</label>
+            <select class="form-select" name="Pname" id="Pname">
+                <option selected>名前</option>
+                {% for name in player_names %}
+                    <option value="{{ name }}">{{ name }}</option>
+                {% endfor %}
+            </select>
+            <input type="number" class="form-control" placeholder="点数" name="Pscore" id="Pscore">
+            <span class="input-group-text">00</span>
+        </div>
+
+        <button type="submit" name="submit_button1" class="btn btn-primary" id="submit_button" disabled>追加</button>
+        <div id="error_message" style="color: red;"></div>
+
+        <script>
+            function validateForm() {
+                const Tscore = document.getElementById('Tscore').value;
+                const Nscore = document.getElementById('Nscore').value;
+                const Sscore = document.getElementById('Sscore').value;
+                const Pscore = document.getElementById('Pscore').value;
+                const Tname = document.getElementById('Tname').value;
+                const Nname = document.getElementById('Nname').value;
+                const Sname = document.getElementById('Sname').value;
+                const Pname = document.getElementById('Pname').value;
+
+                const T = parseInt(Tscore) || 0;
+                const N = parseInt(Nscore) || 0;
+                const S = parseInt(Sscore) || 0;
+                const P = parseInt(Pscore) || 0;
+                const total = T + N + S + P;
+    
+                const submitButton = document.getElementById('submit_button');
+                const errorMessage = document.getElementById('error_message');
+    
+                if (Tscore !== '' && Nscore !== '' && Sscore !== '' && Pscore !== '' &&
+                     Tname !== '名前' && Nname !== '名前' && Sname !== '名前' && Pname !== '名前' && 
+                     total === 1000) {
+                    submitButton.disabled = false;
+                    errorMessage.textContent = '';
+                } else {
+                    submitButton.disabled = true;
+                    if (total !== 1000) errorMessage.textContent = '点数合計が正しくありません．';
+                    else errorMessage.textContent = '名前を全て選択してください．';
+                }
+            }
+
+            function handleFormSubmit(event) {
+                event.preventDefault(); // デフォルトの送信を防止
+                document.getElementById('Tscore').value *= 100;
+                document.getElementById('Nscore').value *= 100;
+                document.getElementById('Sscore').value *= 100;
+                document.getElementById('Pscore').value *= 100;
+                // フォームに hidden input を追加して submit_button1 の値を送信する
+                const hiddenInput = document.createElement('input');
+                hiddenInput.type = 'hidden';
+                hiddenInput.name = 'submit_button1';
+                hiddenInput.value = '1'; // 適当な値
+                document.getElementById('scoreForm').appendChild(hiddenInput);
+                // フォームを送信する
+                document.getElementById('scoreForm').submit();
+            }
+            document.getElementById('Tscore').addEventListener('input', validateForm);
+            document.getElementById('Nscore').addEventListener('input', validateForm);
+            document.getElementById('Sscore').addEventListener('input', validateForm);
+            document.getElementById('Pscore').addEventListener('input', validateForm);
+            document.getElementById('Tname').addEventListener('change', validateForm);
+            document.getElementById('Nname').addEventListener('change', validateForm);
+            document.getElementById('Sname').addEventListener('change', validateForm);
+            document.getElementById('Pname').addEventListener('change', validateForm);
+
+            document.getElementById('scoreForm').addEventListener('submit', handleFormSubmit);
+        </script>
+    </form>
+
+    <br><br><br>
+    <h2>メンバーの追加</h2>
+    <form action="/add" method="POST">
+        <label for="name"></label>
+        <input name="name"></input>
+        <button type="submit" name="submit_button2" class="btn btn-primary">追加</button>
+    </form>
+
+    <br><br><br>
+    <h2>大会の追加</h2>
+    <form action="/add" method="POST">
+        <label for="name"></label>
+        <input name="name"></input>
+        <button type="submit" name="submit_button3" class="btn btn-primary">追加</button>
+    </form>
+</div>
+{% endblock %}

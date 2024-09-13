@@ -1,0 +1,37 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>対局結果の編集</h2>
+    <form action="{{ url_for('game_update', id=results[0].game_id) }}" method="POST">
+        <label for="Tname">{{ results[0].name }}</label>
+        <label for="Tscore">点数</label>
+        <input type="number" step="100" name="Tscore" value="{{ results[0].score }}"></input><br>
+
+        <label for="Nname">{{ results[1].name }}</label>
+        <label for="Nscore">点数</label>
+        <input type="number" step="100" name="Nscore" value="{{ results[1].score }}"></input><br>
+
+        <label for="Sname">{{ results[2].name }}</label>
+        <label for="Sscore">点数</label>
+        <input type="number" step="100" name="Sscore" value="{{ results[2].score }}"></input><br>
+
+        <label for="Pname">{{ results[3].name }}</label>
+        <label for="Pscore">点数</label>
+        <input type="number" step="100" name="Pscore" value="{{ results[3].score }}"></input><br>
+
+        <label for="T">大会名</label>
+        <select id="T" name="T">
+            {% for name in tournament_names %}
+            <option value="{{ name }}" {% if name == now_tournament_name %}selected{% endif %}>{{ name }}</option>
+            {% endfor %}
+        </select><br>
+
+        <button type="submit" name="submit_button1" class="btn btn-primary">保存</button>
+    </form>
+    <h2>対局の削除</h2>
+    <form action="{{ url_for('game_update', id=results[0].game_id) }}" method="POST">
+        <input class="btn btn-danger btn-sm" name="submit_button2" type="submit" value="削除">  
+    </form>
+</div>
+{% endblock %}
